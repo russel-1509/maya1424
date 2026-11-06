@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101513">
+  <meta name="description" content="Aprenda, na prática, como funciona a criptografia e descriptografia com AES-GCM no seu navegador.">
+  <title>CriptoLab — criptografia na prática</title>
+  <style>
+    :root{color-scheme:dark;--bg:#101513;--panel:#171e1a;--panel2:#1d2621;--line:#2c3931;--text:#f2f4ec;--muted:#a3afa5;--lime:#c8f169;--lime2:#d9ff8a;--orange:#ff9b69;--red:#ff827a;--radius:18px;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% -15%,#273529 0,transparent 42%),var(--bg);color:var(--text);min-height:100vh}button,textarea,input{font:inherit}button{cursor:pointer}.shell{max-width:1180px;margin:auto;padding:28px 24px 60px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:62px}.brand{display:flex;align-items:center;gap:11px;font-size:15px;font-weight:750;letter-spacing:-.3px}.brand-icon{width:34px;height:34px;border-radius:10px;background:var(--lime);color:#182014;display:grid;place-items:center;font-size:18px}.badge{color:var(--lime);border:1px solid #42533a;background:#20291f;padding:8px 12px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}.hero{max-width:790px;margin-bottom:36px}.eyebrow{color:var(--lime);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800}.hero h1{font-size:clamp(38px,6vw,66px);line-height:1.04;letter-spacing:-.065em;margin:15px 0 17px;font-weight:740}.hero h1 span{color:var(--lime)}.hero p{color:var(--muted);max-width:640px;line-height:1.65;margin:0;font-size:16px}.layout{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr);gap:18px;align-items:start}.card{background:linear-gradient(145deg,#19211c,#151b17);border:1px solid var(--line);border-radius:var(--radius);padding:24px;box-shadow:0 20px 70px #00000019}.card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:21px}.card-head h2{margin:0;font-size:16px;letter-spacing:-.02em}.step-label{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.1em;text-transform:uppercase}.tabs{display:grid;grid-template-columns:1fr 1fr;padding:4px;background:#101512;border:1px solid #29342d;border-radius:12px;margin-bottom:21px}.tab{border:0;background:transparent;color:var(--muted);border-radius:9px;padding:11px 8px;font-size:13px;font-weight:700}.tab.active{background:#29352b;color:var(--lime)}.field{margin-bottom:17px}.field-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}.field label{font-size:12px;font-weight:700;color:#dce4da}.hint,.counter{font-size:11px;color:var(--muted)}textarea,input{width:100%;border:1px solid #344138;background:#111713;border-radius:11px;color:var(--text);outline:none;transition:border .2s,box-shadow .2s}textarea:focus,input:focus{border-color:#9cbe5b;box-shadow:0 0 0 3px #c8f16914}textarea{resize:vertical;min-height:116px;padding:14px;line-height:1.55;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px}textarea::placeholder,input::placeholder{color:#647068}input{padding:12px 13px;font-size:13px}.pass-wrap{display:flex;gap:8px}.pass-wrap input{min-width:0}.show-btn{border:1px solid #344138;background:#202821;color:var(--muted);border-radius:10px;padding:0 13px;font-size:12px}.primary{width:100%;border:0;background:var(--lime);color:#192014;font-size:14px;font-weight:800;padding:14px;border-radius:11px;transition:background .15s,transform .15s}.primary:hover{background:var(--lime2);transform:translateY(-1px)}.primary:disabled{opacity:.55;cursor:wait}.notice{min-height:18px;margin:12px 0 0;color:var(--red);font-size:12px;line-height:1.5}.notice.success{color:var(--lime)}.output-wrap{position:relative}.output-wrap textarea{min-height:112px;padding-right:76px}.copy{position:absolute;right:9px;top:9px;border:1px solid #344138;background:#202821;color:#dce4da;padding:7px 9px;border-radius:8px;font-size:11px}.empty-output{color:#707d73}.result-card{margin-top:17px}.result-card .card-head{margin-bottom:16px}.result-tag{color:var(--lime);font-size:11px;font-weight:700}.flow{display:grid;gap:0}.flow-row{display:grid;grid-template-columns:34px 1fr;gap:12px;position:relative;padding-bottom:18px}.flow-row:not(:last-child):before{content:"";position:absolute;left:16px;top:33px;bottom:1px;width:1px;background:#344138}.flow-num{width:33px;height:33px;display:grid;place-items:center;border:1px solid #42533a;background:#20291f;border-radius:10px;color:var(--lime);font-size:12px;font-weight:800}.flow-content strong{display:block;font-size:12px;margin:2px 0 4px}.flow-content p{margin:0;color:var(--muted);font-size:11px;line-height:1.55}.flow-content code,.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:#d9e7d4;font-size:11px;overflow-wrap:anywhere}.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:3px}.meta{background:#111713;border:1px solid #29342d;border-radius:10px;padding:10px}.meta span{display:block;color:var(--muted);font-size:10px;margin-bottom:5px}.meta strong{font-family:ui-monospace,monospace;font-size:11px;color:#e5eedc}.explain{margin-top:18px;border:1px solid #364232;background:#1a211a;border-radius:13px;padding:14px}.explain strong{display:block;color:var(--lime);font-size:12px;margin-bottom:6px}.explain p{margin:0;color:#b6c0b5;font-size:11px;line-height:1.6}.bytes{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}.byte{border:1px solid #334239;background:#111713;padding:4px 6px;border-radius:5px;color:#c9d6c6;font:10px ui-monospace,monospace}.byte-more{color:var(--muted);font:10px ui-monospace,monospace;padding:4px}.security-note{margin-top:19px;border-top:1px solid var(--line);padding-top:15px;color:var(--muted);font-size:11px;line-height:1.65}.security-note b{color:#dfe8de}.footer{display:flex;justify-content:space-between;gap:16px;margin-top:30px;color:#748078;font-size:11px}.footer a{color:var(--lime);text-decoration:none}.hidden{display:none!important}.subtle{font-size:11px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+    @media(max-width:800px){.shell{padding:22px 16px 40px}.topbar{margin-bottom:44px}.layout{grid-template-columns:1fr}.hero{margin-bottom:25px}.hero p{font-size:14px}}
+    @media(max-width:420px){.card{padding:18px}.badge{font-size:9px;padding:7px 9px}.footer{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar"><div class="brand"><div class="brand-icon" aria-hidden="true">⌁</div> CriptoLab</div><div class="badge">100% no seu navegador</div></header>
+    <section class="hero"><div class="eyebrow">Criptografia, sem mistério</div><h1>Seu texto entra.<br><span>Só a chave entende.</span></h1><p>Experimente criptografar e descriptografar senhas, códigos ou qualquer texto. Veja cada etapa — da conversão em bytes até o resultado — acontecendo localmente no seu dispositivo.</p></section>
+    <div class="layout">
+      <section>
+        <div class="card">
+          <div class="card-head"><h2>Experimente</h2><span class="step-label">Sua mensagem</span></div>
+          <div class="tabs" role="tablist" aria-label="Operação"><button class="tab active" id="encryptTab" type="button" role="tab" aria-selected="true">Criptografar</button><button class="tab" id="decryptTab" type="button" role="tab" aria-selected="false">Descriptografar</button></div>
+          <div class="field"><div class="field-row"><label id="messageLabel" for="message">Texto original</label><span class="counter" id="counter">0 caracteres</span></div><textarea id="message" placeholder="Digite um texto, senha ou código..." spellcheck="false" autocomplete="off"></textarea><p class="subtle" id="inputHint">Aceita letras, números, espaços, acentos e símbolos.</p></div>
+          <div class="field"><div class="field-row"><label for="secret">Chave secreta (senha)</label><span class="hint">não compartilhe</span></div><div class="pass-wrap"><input id="secret" type="password" placeholder="Escolha uma senha forte" autocomplete="new-password"><button class="show-btn" id="toggleSecret" type="button" aria-label="Mostrar senha">Mostrar</button></div></div>
+          <button class="primary" id="run" type="button">Criptografar texto</button><p class="notice" id="notice" role="status" aria-live="polite"></p>
+          <div class="field" style="margin:20px 0 0"><div class="field-row"><label for="output" id="outputLabel">Texto criptografado</label><span class="hint">formato portátil</span></div><div class="output-wrap"><textarea id="output" class="empty-output" placeholder="O resultado aparecerá aqui..." readonly spellcheck="false"></textarea><button class="copy" id="copy" type="button">Copiar</button></div><p class="subtle" id="outputHint">Copie o resultado para descriptografá-lo depois com a mesma chave.</p></div>
+        </div>
+        <div class="security-note"><b>Importante:</b> esta página é uma demonstração educativa. O processamento ocorre no navegador e nada é enviado a um servidor, mas evite inserir senhas reais ou dados sensíveis em qualquer ferramenta demonstrativa. A senha secreta não é guardada.</div>
+      </section>
+      <aside class="card" aria-live="polite">
+        <div class="card-head"><h2>Por dentro do processo</h2><span class="result-tag" id="processState">AGUARDANDO TEXTO</span></div>
+        <div class="flow">
+          <div class="flow-row"><div class="flow-num">01</div><div class="flow-content"><strong>Texto → bytes</strong><p id="bytesExplain">O texto é codificado em UTF-8. Cada letra ou símbolo vira um ou mais bytes.</p><div class="bytes" id="bytePreview"><span class="byte">aguardando entrada</span></div></div></div>
+          <div class="flow-row"><div class="flow-num">02</div><div class="flow-content"><strong>Senha → chave criptográfica</strong><p id="keyExplain">PBKDF2 combina sua senha com um salt aleatório e executa 310.000 iterações para derivar uma chave AES de 256 bits.</p></div></div>
+          <div class="flow-row"><div class="flow-num">03</div><div class="flow-content"><strong>AES-GCM → mensagem protegida</strong><p id="cipherExplain">AES-GCM cifra os bytes e também autentica o conteúdo. Um IV aleatório garante que a mesma mensagem não gere sempre o mesmo resultado.</p></div></div>
+          <div class="flow-row"><div class="flow-num">04</div><div class="flow-content"><strong>Resultado pronto para copiar</strong><p id="formatExplain">O pacote guarda a versão, o salt, o IV e o texto cifrado em Base64URL. O pacote não contém sua senha.</p></div></div>
+        </div>
+        <div class="meta-grid"><div class="meta"><span>Algoritmo</span><strong>AES-256-GCM</strong></div><div class="meta"><span>Derivação da chave</span><strong>PBKDF2 · SHA-256</strong></div><div class="meta"><span>Iterações</span><strong>310.000</strong></div><div class="meta"><span>Codificação</span><strong>UTF-8 / Base64URL</strong></div></div>
+        <div class="explain"><strong id="resultTitle">O que você vai observar</strong><p id="resultExplain">Digite um texto e uma chave secreta, depois clique em criptografar. O salt e o IV são aleatórios: por isso, duas criptografias do mesmo texto e senha produzem pacotes diferentes. Para recuperar o texto, use a operação de descriptografia e a mesma senha.</p></div>
+      </aside>
+    </div>
+    <footer class="footer"><span>Uma demonstração interativa de criptografia moderna.</span><span>Feito para aprender · <a href="https://developer.mozilla.org/docs/Web/API/Web_Crypto_API" target="_blank" rel="noreferrer">Web Crypto API</a></span></footer>
+  </main>
+<script>
+(() => {
+  'use strict';
+  const ITERATIONS = 310000;
+  const $ = (id) => document.getElementById(id);
+  const ui = {
+    encryptTab:$('encryptTab'), decryptTab:$('decryptTab'), message:$('message'), secret:$('secret'), output:$('output'), run:$('run'), notice:$('notice'), counter:$('counter'), messageLabel:$('messageLabel'), inputHint:$('inputHint'), outputLabel:$('outputLabel'), outputHint:$('outputHint'), processState:$('processState'), bytesExplain:$('bytesExplain'), bytePreview:$('bytePreview'), keyExplain:$('keyExplain'), cipherExplain:$('cipherExplain'), formatExplain:$('formatExplain'), resultTitle:$('resultTitle'), resultExplain:$('resultExplain')
+  };
+  let mode = 'encrypt';
+  let lastSalt = '';
+  let lastIv = '';
+  const encoder = new TextEncoder();
+  const decoder = new TextDecoder('utf-8', { fatal: true });
+
+  function setMode(next) {
+    mode = next;
+    const encrypting = mode === 'encrypt';
+    ui.encryptTab.classList.toggle('active', encrypting);
+    ui.decryptTab.classList.toggle('active', !encrypting);
+    ui.encryptTab.setAttribute('aria-selected', String(encrypting));
+    ui.decryptTab.setAttribute('aria-selected', String(!encrypting));
+    ui.messageLabel.textContent = encrypting ? 'Texto original' : 'Pacote criptografado';
+    ui.message.placeholder = encrypting ? 'Digite um texto, senha ou código...' : 'Cole aqui o pacote AESGCM1...';
+    ui.inputHint.textContent = encrypting ? 'Aceita letras, números, espaços, acentos e símbolos.' : 'Cole o pacote completo gerado na etapa de criptografia.';
+    ui.run.textContent = encrypting ? 'Criptografar texto' : 'Descriptografar texto';
+    ui.outputLabel.textContent = encrypting ? 'Texto criptografado' : 'Texto descriptografado';
+    ui.outputHint.textContent = encrypting ? 'Copie o resultado para descriptografá-lo depois com a mesma chave.' : 'O texto recuperado aparece aqui somente após a autenticação correta.';
+    ui.message.value = '';
+    ui.output.value = '';
+    ui.output.classList.add('empty-output');
+    ui.notice.textContent = '';
+    ui.notice.classList.remove('success');
+    ui.counter.textContent = '0 caracteres';
+    clearProcess();
+  }
+  function clearProcess() {
+    ui.processState.textContent = 'AGUARDANDO TEXTO';
+    ui.bytesExplain.textContent = 'O texto é codificado em UTF-8. Cada letra ou símbolo vira um ou mais bytes.';
+    ui.bytePreview.innerHTML = '<span class="byte">aguardando entrada</span>';
+    ui.keyExplain.textContent = 'PBKDF2 combina sua senha com um salt aleatório e executa 310.000 iterações para derivar uma chave AES de 256 bits.';
+    ui.cipherExplain.textContent = 'AES-GCM cifra os bytes e também autentica o conteúdo. Um IV aleatório garante que a mesma mensagem não gere sempre o mesmo resultado.';
+    ui.formatExplain.textContent = 'O pacote guarda a versão, o salt, o IV e o texto cifrado em Base64URL. O pacote não contém sua senha.';
+    ui.resultTitle.textContent = 'O que você vai observar';
+    ui.resultExplain.textContent = 'Digite um texto e uma chave secreta, depois clique em criptografar. O salt e o IV são aleatórios: por isso, duas criptografias do mesmo texto e senha produzem pacotes diferentes. Para recuperar o texto, use a operação de descriptografia e a mesma senha.';
+  }
+  function bytesToB64(bytes) {
+    let binary = '';
+    for (let i=0; i<bytes.length; i+=0x8000) binary += String.fromCharCode(...bytes.subarray(i, i+0x8000));
+    return btoa(binary).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+  }
+  function b64ToBytes(value) {
+    if (!/^[A-Za-z0-9_-]+$/.test(value)) throw new Error('O pacote contém um campo Base64URL inválido.');
+    const base64 = value.replace(/-/g,'+').replace(/_/g,'/') + '='.repeat((4-value.length%4)%4);
+    const binary = atob(base64);
+    return Uint8Array.from(binary, c => c.charCodeAt(0));
+  }
+  async function deriveKey(password, salt) {
+    const material = await crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveKey']);
+    return crypto.subtle.deriveKey({name:'PBKDF2', salt, iterations:ITERATIONS, hash:'SHA-256'}, material, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']);
+  }
+  function updateBytes(bytes, label) {
+    ui.bytesExplain.textContent = `${label}: ${bytes.length} byte${bytes.length === 1 ? '' : 's'} em UTF-8. Um caractere pode ocupar mais de um byte.`;
+    const shown = bytes.subarray(0, 24);
+    ui.bytePreview.innerHTML = [...shown].map(byte => `<span class="byte">${byte.toString(16).padStart(2,'0').toUpperCase()}</span>`).join('') + (bytes.length > shown.length ? `<span class="byte-more">+${bytes.length-shown.length} bytes</span>` : '');
+  }
+  function setSuccess(text) { ui.notice.textContent = text; ui.notice.classList.add('success'); }
+
+  async function encrypt() {
+    const text = ui.message.value;
+    const password = ui.secret.value;
+    if (!text.length) throw new Error('Digite um texto para criptografar.');
+    if (!password.length) throw new Error('Informe uma chave secreta.');
+    const plainBytes = encoder.encode(text);
+    updateBytes(plainBytes, 'Seu texto foi convertido');
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+    const key = await deriveKey(password, salt);
+    const encrypted = new Uint8Array(await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, plainBytes));
+    const packageText = `AESGCM1.${bytesToB64(salt)}.${bytesToB64(iv)}.${bytesToB64(encrypted)}`;
+    ui.output.value = packageText;
+    ui.output.classList.remove('empty-output');
+    lastSalt = bytesToB64(salt); lastIv = bytesToB64(iv);
+    ui.processState.textContent = 'CRIPTOGRAFADO';
+    ui.keyExplain.textContent = `PBKDF2 transformou sua senha em uma chave de 256 bits com 310.000 iterações. Salt aleatório: ${lastSalt}. A senha não aparece no pacote.`;
+    ui.cipherExplain.textContent = `AES-GCM usou um IV aleatório de 12 bytes (${lastIv}) para cifrar o texto e anexar uma etiqueta de autenticação. Alterar o pacote ou usar outra senha faz a verificação falhar.`;
+    ui.formatExplain.textContent = 'O pacote é AESGCM1.salt.iv.cifra, com campos binários codificados em Base64URL. O salt e o IV não são segredos: ficam no pacote para permitir a descriptografia.';
+    ui.resultTitle.textContent = 'Por que o resultado parece aleatório?';
+    ui.resultExplain.textContent = 'O texto foi cifrado — não apenas convertido em outra escrita. Sem a chave correta, o conteúdo não é legível. O salt e o IV novos fazem com que uma nova execução gere outro pacote mesmo com o mesmo texto e senha.';
+    setSuccess('Criptografia concluída. Copie o pacote e guarde-o junto da sua chave secreta.');
+  }
+  async function decrypt() {
+    const packageText = ui.message.value.trim();
+    const password = ui.secret.value;
+    if (!packageText) throw new Error('Cole o pacote que deseja descriptografar.');
+    if (!password.length) throw new Error('Informe a mesma chave secreta usada para criptografar.');
+    const parts = packageText.split('.');
+    if (parts.length !== 4 || parts[0] !== 'AESGCM1') throw new Error('Formato inválido. O pacote deve começar com AESGCM1 e conter salt, IV e cifra.');
+    const salt = b64ToBytes(parts[1]);
+    const iv = b64ToBytes(parts[2]);
+    const ciphertext = b64ToBytes(parts[3]);
+    if (salt.length !== 16 || iv.length !== 12 || ciphertext.length < 16) throw new Error('O pacote está incompleto ou foi alterado.');
+    const key = await deriveKey(password, salt);
+    const plaintext = await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, ciphertext);
+    const bytes = new Uint8Array(plaintext);
+    const text = decoder.decode(bytes);
+    ui.output.value = text;
+    ui.output.classList.remove('empty-output');
+    updateBytes(bytes, 'O texto recuperado tem');
+    ui.processState.textContent = 'DESCRIPTOGRAFADO';
+    ui.keyExplain.textContent = `O salt ${parts[1]} foi usado com a senha informada para derivar novamente a mesma chave AES de 256 bits via PBKDF2 (310.000 iterações).`;
+    ui.cipherExplain.textContent = `AES-GCM verificou o IV (${parts[2]}) e a etiqueta de autenticação antes de liberar os dados. Senha errada ou conteúdo alterado causa falha de autenticação.`;
+    ui.formatExplain.textContent = 'A cifra e os parâmetros do pacote foram decodificados; após autenticação bem-sucedida, os bytes foram convertidos de volta de UTF-8 para texto.';
+    ui.resultTitle.textContent = 'A autenticação protege contra alterações';
+    ui.resultExplain.textContent = 'AES-GCM só devolve o texto se a senha for correta e os dados forem íntegros. Se uma senha errada ou pacote modificado for usado, nenhum texto é revelado.';
+    setSuccess('Descriptografia concluída: o texto original foi recuperado.');
+  }
+  ui.encryptTab.addEventListener('click', () => setMode('encrypt'));
+  ui.decryptTab.addEventListener('click', () => setMode('decrypt'));
+  ui.message.addEventListener('input', () => { ui.counter.textContent = `${ui.message.value.length} caractere${ui.message.value.length === 1 ? '' : 's'}`; });
+  $('toggleSecret').addEventListener('click', (event) => { const visible = ui.secret.type === 'password'; ui.secret.type = visible ? 'text' : 'password'; event.currentTarget.textContent = visible ? 'Ocultar' : 'Mostrar'; event.currentTarget.setAttribute('aria-label', visible ? 'Ocultar senha' : 'Mostrar senha'); });
+  ui.run.addEventListener('click', async () => {
+    ui.notice.textContent = ''; ui.notice.classList.remove('success'); ui.run.disabled = true;
+    try { if (!crypto.subtle) throw new Error('Seu navegador não oferece Web Crypto neste contexto. Abra o site em HTTPS ou localhost.'); if (mode === 'encrypt') await encrypt(); else await decrypt(); }
+    catch (error) { ui.notice.textContent = mode === 'decrypt' && error.name === 'OperationError' ? 'Não foi possível autenticar: confira a senha e se o pacote não foi alterado.' : (error.message || 'Não foi possível concluir a operação.'); }
+    finally { ui.run.disabled = false; }
+  });
+  $('copy').addEventListener('click', async (event) => {
+    if (!ui.output.value) return;
+    try { await navigator.clipboard.writeText(ui.output.value); event.currentTarget.textContent = 'Copiado!'; setTimeout(() => { event.currentTarget.textContent = 'Copiar'; }, 1400); }
+    catch { ui.output.select(); document.execCommand('copy'); event.currentTarget.textContent = 'Copiado!'; setTimeout(() => { event.currentTarget.textContent = 'Copiar'; }, 1400); }
+  });
+})();
+</script>
+</body>
+</html>
